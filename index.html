@@ -26,20 +26,75 @@
     footer{margin-top:22px;color:var(--muted);font-size:0.9rem;text-align:center}
     .field{display:flex;flex-direction:column;gap:6px}
     input,textarea{padding:10px;border-radius:8px;border:1px solid #e6eef0;font-size:0.95rem}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;   /* default terang */
+      color: black;
+      transition: background 0.3s, color 0.3s; /* biar halus */
+    }
+
+    body.dark-mode {
+      background-color: #121212; /* mode gelap */
+      color: white;
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #444;
+      color: white;
+    }
+    .card {
+  background: white;   /* default terang */
+  color: black;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Mode gelap */
+body.dark-mode .card {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+input, textarea {
+  background: #f9f9f9;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* versi dark */
+body.dark-mode input,
+body.dark-mode textarea {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
   </style>
 </head>
 <body>
+  <button class="toggle-btn" onclick="toggleMode()">🌙 / ☀️</button>
+
   <div class="container">
     <header>
       <!-- Ganti src ke logo perusahaan Anda (lokal atau URL) -->
-      <img class="logo" src="logo-band.jpg" alt="Logo Band" width="200">
+      <img class="logo" src="logo-band.jpg" alt="Logo Perusahaan">
       <div>
         <h1>Aurora Borealis</h1>
         <p class="lead">Group Band SMK Negeri 1, Kota Pasuruan.</p>
       </div>
     </header>
 
-    <div class="card grid">
+    <div class="card grid" class="card">
       <main>
         <section class="about">
           <p class="muted">Punya Acara atau Cafe tapi takut bosenin? ingin ada band musik yang main seperti di acara orang-orang? bingung cari dimana Group Bandnya? tenang, Aurora Borealis Band siap untuk meramaikan acara dan cafe anda supaya terlihat meriah.</p>
@@ -52,13 +107,14 @@
         <section class="gallery" style="margin-top:16px">
           <h2>Galeri / Foto</h2>
           <!-- Ganti src ke foto perusahaan. Bisa lebih dari satu; contoh ini hanya satu gambar. -->
-          <img src="serah-terima-kepsek.jpg" alt="Foto Perusahaan" width="400">
+          <img src="serah-terima-kepsek.jpg" alt="Foto Perusahaan">
           <p class="muted" style="margin-top:8px">"Tim kami saat Serah Terima Jabatan Kepala Sekolah SMKN 1 Kota Pasuruan".</p>
         </section>
       </main>
 
       <aside>
         <div class="card contact">
+       
           <h2>Hubungi Owner</h2>
           <p class="muted">Tertarik? hubungi kami lewat via WhatsApp dibawah.</p>
 
@@ -72,7 +128,7 @@
           <div>
             <p class="muted"><strong>Alternatif:</strong> Isi formulir singkat, kami akan menghubungi via WhatsApp.</p>
             <form id="contact-form">
-              <div class="field"><label>Nama</label><input id="name" type="text" placeholder="Nama lengkap" required=""></div>
+              <div class="field"><label>Nama</label><input id="name" type="text" placeholder="Nama lengkap" required="" class="input"></div>
               <div class="field"><label>Email (opsional)</label><input id="email" type="email" placeholder="email@contoh.com"></div>
               <div class="field"><label>Pesan</label><textarea id="message" rows="4" placeholder="Saya membutuhkan penampilan musik...." required=""></textarea></div>
               <div style="margin-top:10px">
@@ -118,6 +174,23 @@
 
     // isi tahun otomatis
     document.getElementById('year').textContent = new Date().getFullYear();
+    function toggleMode() {
+      document.body.classList.toggle("dark-mode");
+
+      // simpan preferensi di localStorage
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("mode", "dark");
+      } else {
+        localStorage.setItem("mode", "light");
+      }
+    }
+
+    // cek preferensi saat buka ulang
+    window.onload = function() {
+      if (localStorage.getItem("mode") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+    }
   </script>
 
 
